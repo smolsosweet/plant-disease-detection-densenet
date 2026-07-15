@@ -85,8 +85,8 @@ with gr.Blocks(theme=theme, title="Hệ Thống Chẩn Đoán Bệnh Cây Trồn
     }
     """) as app:
     
-    gr.Markdown("""
-    <div style="text-align: center; padding: 20px; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+    gr.HTML("""
+    <div style="text-align: center; padding: 20px; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; border-radius: 8px;">
         <h1 style="margin: 0; color: #1e40af;">🌿 Hệ Thống Chẩn Đoán Bệnh Cây Trồng Bằng AI</h1>
         <p style="margin: 5px 0 0; color: #64748b;">Ứng dụng Deep Learning (DenseNet121) trong Nông nghiệp Thông minh</p>
     </div>

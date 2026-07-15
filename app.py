@@ -23,63 +23,18 @@ class_names = {v: k for k, v in class_indices.items()}
 # =========================
 # 2. NHÃN TIẾNG VIỆT
 # =========================
-VIETNAMESE_LABELS = {
-    "Apple___Apple_scab": "Táo – Bệnh ghẻ táo",
-    "Apple___Black_rot": "Táo – Bệnh thối đen",
-    "Apple___Cedar_apple_rust": "Táo – Bệnh gỉ sắt",
-    "Apple___healthy": "Táo – Khỏe mạnh",
-
-    "Blueberry___healthy": "Việt quất – Khỏe mạnh",
-
-    "Cherry_(including_sour)___Powdery_mildew": "Anh đào – Bệnh phấn trắng",
-    "Cherry_(including_sour)___healthy": "Anh đào – Khỏe mạnh",
-
-    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": "Ngô – Đốm lá xám",
-    "Corn_(maize)___Common_rust_": "Ngô – Bệnh gỉ sắt",
-    "Corn_(maize)___Northern_Leaf_Blight": "Ngô – Bệnh cháy lá",
-    "Corn_(maize)___healthy": "Ngô – Khỏe mạnh",
-
-    "Grape___Black_rot": "Nho – Bệnh thối đen",
-    "Grape___Esca_(Black_Measles)": "Nho – Bệnh Esca",
-    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": "Nho – Bệnh cháy lá",
-    "Grape___healthy": "Nho – Khỏe mạnh",
-
-    "Orange___Haunglongbing_(Citrus_greening)": "Cam – Bệnh Greening (HLB)",
-
-    "Peach___Bacterial_spot": "Đào – Bệnh đốm vi khuẩn",
-    "Peach___healthy": "Đào – Khỏe mạnh",
-
-    "Pepper,_bell___Bacterial_spot": "Ớt chuông – Bệnh đốm vi khuẩn",
-    "Pepper,_bell___healthy": "Ớt chuông – Khỏe mạnh",
-
-    "Potato___Early_blight": "Khoai tây – Bệnh cháy sớm",
-    "Potato___Late_blight": "Khoai tây – Bệnh cháy muộn",
-    "Potato___healthy": "Khoai tây – Khỏe mạnh",
-
-    "Raspberry___healthy": "Mâm xôi – Khỏe mạnh",
-    "Soybean___healthy": "Đậu nành – Khỏe mạnh",
-
-    "Squash___Powdery_mildew": "Bí – Bệnh phấn trắng",
-
-    "Strawberry___Leaf_scorch": "Dâu tây – Bệnh cháy lá",
-    "Strawberry___healthy": "Dâu tây – Khỏe mạnh",
-
-    "Tomato___Bacterial_spot": "Cà chua – Bệnh đốm vi khuẩn",
-    "Tomato___Early_blight": "Cà chua – Bệnh cháy sớm",
-    "Tomato___Late_blight": "Cà chua – Bệnh cháy muộn",
-    "Tomato___Leaf_Mold": "Cà chua – Bệnh mốc lá",
-    "Tomato___Septoria_leaf_spot": "Cà chua – Bệnh đốm lá Septoria",
-    "Tomato___Spider_mites Two-spotted_spider_mite": "Cà chua – Nhện đỏ",
-    "Tomato___Target_Spot": "Cà chua – Bệnh đốm mục tiêu",
-    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": "Cà chua – Virus xoăn lá",
-    "Tomato___Tomato_mosaic_virus": "Cà chua – Virus khảm",
-    "Tomato___healthy": "Cà chua – Khỏe mạnh"
-}
+VIETNAMESE_LABELS_PATH = "vietnamese_labels.json"
+print("Đang load nhãn tiếng Việt...")
+with open(VIETNAMESE_LABELS_PATH, 'r', encoding="utf-8") as f:
+    VIETNAMESE_LABELS = json.load(f)
 
 # =========================
 # 3. HÀM DỰ ĐOÁN
 # =========================
 def predict_disease(image):
+    if image is None:
+        return {"Lỗi: Vui lòng tải ảnh lên trước!": 1.0}
+    
     image = image.convert("RGB").resize((224, 224))
     img_array = np.array(image) / 255.0
     img_array = np.expand_dims(img_array, axis=0)

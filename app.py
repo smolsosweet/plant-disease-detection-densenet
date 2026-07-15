@@ -109,7 +109,9 @@ with gr.Blocks(title="Hệ Thống Chẩn Đoán Bệnh Cây Trồng AI") as app
             gr.Examples(
                 examples=[
                     "examples/apple_scab_leaf.png",
-                    "examples/healthy_corn_leaf.png"
+                    "examples/healthy_corn_leaf.png",
+                    "examples/BenhPhanTrang-02.jpg",
+                    "examples/CaChua_BenhDomMocDen.jpg"
                 ],
                 inputs=image_input,
                 label="Ảnh mẫu (Click để thử)"

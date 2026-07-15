@@ -11,8 +11,14 @@ This project is an AI-powered system designed to detect and classify plant disea
 The application is deployed with a user-friendly web interface using **Gradio**, allowing users to upload images or use their camera for real-time diagnosis.
 
 ## 🚀 Live Demo
-Try the web app here: **[LINK_HUGGING_FACE_CUA_EM_O_DAY]**
+Try the web app here: **[https://huggingface.co/spaces/smolsosweet/plant-disease-ai](https://huggingface.co/spaces/smolsosweet/plant-disease-ai)**
 *(Click the link to test the model on Hugging Face Spaces)*
+
+## ✨ Key Features
+* **Real-time Camera Support:** Capture images directly from your mobile or laptop webcam.
+* **Smart Confidence Threshold:** Rejects unclear or non-leaf images to prevent false predictions.
+* **Treatment Recommendations:** Provides actionable agricultural advice and treatment steps for the diagnosed plant disease.
+* **Example Datasets:** Built-in sample images for quick testing.
 
 ## 🛠️ Tech Stack
 * **Core:** Python, TensorFlow, Keras

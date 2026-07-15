@@ -1,3 +1,14 @@
+---
+title: Plant Disease AI
+emoji: 🌿
+colorFrom: green
+colorTo: blue
+sdk: gradio
+sdk_version: "4.44.0"
+app_file: app.py
+pinned: false
+---
+
 # 🌿 AI Plant Disease Detection System
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)

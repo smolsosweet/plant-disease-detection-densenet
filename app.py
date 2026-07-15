@@ -21,19 +21,24 @@ with open(JSON_PATH, 'r', encoding="utf-8") as f:
 class_names = {v: k for k, v in class_indices.items()}
 
 # =========================
-# 2. NHÃN TIẾNG VIỆT
+# 2. NHÃN TIẾNG VIỆT & LỜI KHUYÊN
 # =========================
 VIETNAMESE_LABELS_PATH = "vietnamese_labels.json"
 print("Đang load nhãn tiếng Việt...")
 with open(VIETNAMESE_LABELS_PATH, 'r', encoding="utf-8") as f:
     VIETNAMESE_LABELS = json.load(f)
 
+TREATMENTS_PATH = "treatments.json"
+print("Đang load dữ liệu điều trị...")
+with open(TREATMENTS_PATH, 'r', encoding="utf-8") as f:
+    TREATMENTS = json.load(f)
+
 # =========================
 # 3. HÀM DỰ ĐOÁN
 # =========================
 def predict_disease(image):
     if image is None:
-        return {"Lỗi: Vui lòng tải ảnh lên trước!": 1.0}
+        return {"Lỗi: Vui lòng tải ảnh lên trước!": 1.0}, ""
     
     image = image.convert("RGB").resize((224, 224))
     img_array = np.array(image) / 255.0
@@ -44,7 +49,7 @@ def predict_disease(image):
     # Kiểm tra ngưỡng tin cậy (Confidence Threshold)
     max_prob = float(np.max(predictions))
     if max_prob < 0.5:
-        return {"⚠️ Ảnh không rõ ràng hoặc không phải lá cây. Vui lòng thử lại!": max_prob}
+        return {"⚠️ Ảnh không rõ ràng hoặc không phải lá cây. Vui lòng thử lại!": max_prob}, ""
 
     results = {}
     for i, prob in enumerate(predictions):
@@ -52,7 +57,14 @@ def predict_disease(image):
         viet = VIETNAMESE_LABELS.get(eng, eng)
         results[viet] = float(prob)
 
-    return results
+    # Lấy bệnh có xác suất cao nhất (Top 1) để đưa ra lời khuyên
+    top1_index = int(np.argmax(predictions))
+    top1_eng = class_names[top1_index]
+    treatment_advice = TREATMENTS.get(top1_eng, "Chưa có thông tin điều trị cho loại bệnh này.")
+    
+    treatment_html = f"<div style='background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 15px; margin-top: 15px; border-radius: 4px;'><strong>💡 Lời khuyên & Điều trị:</strong><br>{treatment_advice}</div>"
+
+    return results, treatment_html
 
 # =========================
 # 4. GIAO DIỆN GRADIO (ĐẸP & DỄ DÙNG)
@@ -113,6 +125,9 @@ with gr.Blocks(theme=theme, title="Hệ Thống Chẩn Đoán Bệnh Cây Trồn
                 show_label=True,
                 elem_id="result-output"
             )
+            treatment_output = gr.HTML(
+                elem_id="treatment-output"
+            )
     
     with gr.Row():
         predict_btn = gr.Button(
@@ -122,6 +137,6 @@ with gr.Blocks(theme=theme, title="Hệ Thống Chẩn Đoán Bệnh Cây Trồn
             elem_id="analyze-button"
         )
     
-    predict_btn.click(predict_disease, image_input, output)
+    predict_btn.click(predict_disease, image_input, [output, treatment_output])
 
     app.launch(footer_links=[])

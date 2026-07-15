@@ -48,7 +48,7 @@ def predict_disease(image):
 
     # Kiểm tra ngưỡng tin cậy (Confidence Threshold)
     max_prob = float(np.max(predictions))
-    if max_prob < 0.5:
+    if max_prob < 0.3:
         return {"⚠️ Ảnh không rõ ràng hoặc không phải lá cây. Vui lòng thử lại!": max_prob}, ""
 
     results = {}

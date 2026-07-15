@@ -79,11 +79,7 @@ theme = gr.themes.Default(
     spacing_size="md",
 )
 
-with gr.Blocks(theme=theme, title="Hệ Thống Chẩn Đoán Bệnh Cây Trồng AI", css="""
-    footer {
-        display: none !important;
-    }
-    """) as app:
+with gr.Blocks(title="Hệ Thống Chẩn Đoán Bệnh Cây Trồng AI") as app:
     
     gr.HTML("""
     <div style="text-align: center; padding: 20px; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; border-radius: 8px;">
@@ -139,4 +135,12 @@ with gr.Blocks(theme=theme, title="Hệ Thống Chẩn Đoán Bệnh Cây Trồn
     
     predict_btn.click(predict_disease, image_input, [output, treatment_output])
 
-    app.launch(footer_links=[])
+    app.launch(
+        theme=theme, 
+        css="""
+        footer {
+            display: none !important;
+        }
+        """, 
+        footer_links=[]
+    )

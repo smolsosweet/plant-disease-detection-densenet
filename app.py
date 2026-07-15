@@ -90,7 +90,16 @@ with gr.Blocks(theme=theme, title="Hệ Thống Chẩn Đoán Bệnh Cây Trồn
                 height=400,
                 interactive=True,
                 show_label=True,
-                elem_id="image-upload"
+                elem_id="image-upload",
+                sources=["upload", "webcam"]
+            )
+            gr.Examples(
+                examples=[
+                    "examples/apple_scab_leaf.png",
+                    "examples/healthy_corn_leaf.png"
+                ],
+                inputs=image_input,
+                label="Ảnh mẫu (Click để thử)"
             )
         with gr.Column(scale=1):
             output = gr.Label(
